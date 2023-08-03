@@ -857,16 +857,17 @@ function main
     
     % buttons 
     % set location, name, and associated function
-    sideview = uicontrol('String','Side View','Units','normalized','Position',[0.00995568263045,0.94641256281407,.05,0.0354],'Visible','on', 'Enable', 'on', 'Callback', @snapToSideView);
-    frontview = uicontrol('String', 'Front View', 'Units','normalized','Position',[0.00995568263045,0.91641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @snaptofront);
-    button3mo = uicontrol('Style', 'togglebutton', 'String', '3 MO', 'Units','normalized','Position',[0.00995568263045,0.88641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @three_mo_toggle);
-    button5mo = uicontrol('Style', 'togglebutton', 'String', '5 MO', 'Units','normalized','Position',[0.00995568263045,0.85641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @five_mo_toggle);
-    button7mo = uicontrol('Style', 'togglebutton', 'String', '7 MO', 'Units', 'normalized', 'Position', [0.00995568263045,0.82641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @seven_mo_toggle);
-    button9mo = uicontrol('Style', 'togglebutton', 'String', '9 MO', 'Units', 'normalized', 'Position', [0.00995568263045,0.79641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @nine_mo_toggle);
-    b400 = uicontrol('Style', 'togglebutton', 'String', '400 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.76641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b400_toggle);
-    b800 = uicontrol('Style', 'togglebutton', 'String', '800 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.73641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b800_toggle);
-    b1600 = uicontrol('Style', 'togglebutton', 'String', '1600 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.70641256281407,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b1600_toggle);
-    
+    sideview = uicontrol('String','Side View','Units','normalized','Position',[0.00995568263045,0.95,.05,0.0354],'Visible','on', 'Enable', 'on', 'Callback', @snapToSideView);
+    frontview = uicontrol('String', 'Front View', 'Units','normalized','Position',[0.00995568263045,0.905,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @snaptofront);
+    button3mo = uicontrol('Style', 'togglebutton', 'String', '3 MO', 'Units','normalized','Position',[0.00995568263045,0.86,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @three_mo_toggle);
+    button5mo = uicontrol('Style', 'togglebutton', 'String', '5 MO', 'Units','normalized','Position',[0.00995568263045,0.815,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @five_mo_toggle);
+    button7mo = uicontrol('Style', 'togglebutton', 'String', '7 MO', 'Units', 'normalized', 'Position', [0.00995568263045,0.77,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @seven_mo_toggle);
+    button9mo = uicontrol('Style', 'togglebutton', 'String', '9 MO', 'Units', 'normalized', 'Position', [0.00995568263045,0.725,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @nine_mo_toggle);
+    b400 = uicontrol('Style', 'togglebutton', 'String', '400 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.68,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b400_toggle);
+    b800 = uicontrol('Style', 'togglebutton', 'String', '800 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.635,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b800_toggle);
+    b1600 = uicontrol('Style', 'togglebutton', 'String', '1600 ms', 'Units', 'normalized', 'Position', [0.00995568263045,0.59,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @b1600_toggle);
+    reset = uicontrol('String', 'Reset View', 'Units', 'normalized', 'Position', [0.00995568263045,0.545,0.05,0.0354], 'Visible', 'on', 'Enable', 'on', 'Callback', @reset_view);
+
     %plot WT figure in right subplot
     subplot(1, 2, 2);
     % reset the spaces between the lines to 0
@@ -891,6 +892,24 @@ function main
     % add a legend in the order of the variables added in allmmn (taken
     % from alldata)
     legend("3mo400ms", "3mo800ms", "3mo1600ms", "5mo400ms", "5mo800ms", "5mo1600ms", "7mo400ms", "7mo800ms", "7mo1600ms", "9mo400ms", "9mo800ms", "9mo1600ms", 'Position', [0.486647487190949 0.791334798994975 0.065403859899928 0.177763819095477]);
+    
+   % function to reset visibilities and views
+   function reset_view(~, ~)
+        subplot(1, 2, 1);
+        view(3);
+        subplot(1, 2, 2);
+        view(3);
+        for i = 1:24
+            lines(i).LineStyle = style(i);
+        end
+        button3mo.Value = 0;
+        button5mo.Value = 0;
+        button7mo.Value = 0;
+        button9mo.Value = 0;
+        b400.Value = 0;
+        b800.Value = 0;
+        b1600.Value = 0;
+   end
     
     % function to change subplots' views to side (to see amplitude
     % differences)
